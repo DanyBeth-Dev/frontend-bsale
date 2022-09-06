@@ -3,18 +3,23 @@ let $template = document.getElementById('card-template').content
 let $fragment = document.createDocumentFragment()
 let formulario = document.getElementById('busqueda')
 let urlBase = 'https://evening-taiga-78339.herokuapp.com'
+let ubicacionArreglo = window.location.pathname.split('/')
+let formateador = (arr) => {
+  let lastItem = arr[arr.length-1]
+  if (!lastItem) return '/'
+  return lastItem
+}
+const ubicacion = formateador(ubicacionArreglo)
+console.log('ubicacion: ', ubicacion)
 
 /* Renderizado para cada ruta */
 /* Manipulación del DOM directa */
 
 window.addEventListener('load', function (event) {
-  const ubicacion = event.target.location.pathname
-  console.log('ubicacion: ', ubicacion)
-
   const filtrado = async (productoDeseado) => {
     //console.log(productoDeseado)
     const allData = await axios.get(`${urlBase}/data${productoDeseado}`)
-    console.log(1, allData.data)
+    console.log('data por evento load: ', allData.data)
     let allElements = ''
     allData.data.forEach(e => {
       const url = e.url_image ? e.url_image : '#'
@@ -45,7 +50,7 @@ window.addEventListener('load', function (event) {
 document.addEventListener('submit', async (e) => {
   e.preventDefault()
   let productoABuscar = e.target[0].value
-  //console.log(productoABuscar)
+  console.log('producto a buscar: ', productoABuscar)
   try {
     cards.innerHTML = `
         <div class="spinner-border" role="status">
@@ -56,7 +61,7 @@ document.addEventListener('submit', async (e) => {
     //console.log(query)
     let api = `${urlBase}/search`
     let res = await axios.get(api, { params: query })
-    console.log(2, res)
+    console.log('data por evento submit: ', res)
     let resData = res.data
     //console.log(api, res)
     console.log('resData: ', resData)
