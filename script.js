@@ -2,7 +2,7 @@ let cards = document.getElementById('cards')
 let $template = document.getElementById('card-template').content
 let $fragment = document.createDocumentFragment()
 let formulario = document.getElementById('busqueda')
-let urlBase = 'https://boiling-everglades-34988.herokuapp.com'
+let urlBase = 'https://evening-taiga-78339.herokuapp.com'
 
 /* Renderizado para cada ruta */
 /* Manipulación del DOM directa */
