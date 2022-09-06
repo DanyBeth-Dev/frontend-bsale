@@ -7,7 +7,7 @@ let ubicacionArreglo = window.location.pathname.split('/')
 let formateador = (arr) => {
   let lastItem = arr[arr.length-1]
   if (!lastItem) return '/'
-  return lastItem
+  return (`/${lastItem}`)
 }
 const ubicacion = formateador(ubicacionArreglo)
 console.log('ubicacion: ', ubicacion)
