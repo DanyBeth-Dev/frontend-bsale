@@ -1,0 +1,23 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "docs": "jsdoc -c jsdoc.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanyBeth-Dev/frontend-bsale.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanyBeth-Dev/frontend-bsale/issues"
+  },
+  "homepage": "https://github.com/DanyBeth-Dev/frontend-bsale#readme",
+  "devDependencies": {
+    "jsdoc": "^3.6.11"
+  }
+}

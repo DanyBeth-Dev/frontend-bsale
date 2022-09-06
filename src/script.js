@@ -4,6 +4,12 @@ let $fragment = document.createDocumentFragment()
 let formulario = document.getElementById('busqueda')
 let urlBase = 'https://evening-taiga-78339.herokuapp.com'
 let ubicacionArreglo = window.location.pathname.split('/')
+
+/**
+ * Esta función formatea el path para obtener solamente el slug.
+ * @param {Array} arr El arreglo conformado por el pathname guardado en la variable ubicacionArreglo.
+ * @returns {String} El slug,
+ */
 let formateador = (arr) => {
   let lastItem = arr[arr.length-1]
   if (!lastItem) return '/'
@@ -16,6 +22,13 @@ console.log('ubicacion: ', ubicacion)
 /* Manipulación del DOM directa */
 
 window.addEventListener('load', function (event) {
+  cards.innerHTML = `
+  <div class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+  </div>
+  `
   const filtrado = async (productoDeseado) => {
     //console.log(productoDeseado)
     const allData = await axios.get(`${urlBase}/data${productoDeseado}`)
@@ -53,9 +66,11 @@ document.addEventListener('submit', async (e) => {
   console.log('producto a buscar: ', productoABuscar)
   try {
     cards.innerHTML = `
+      <div class="d-flex justify-content-center">
         <div class="spinner-border" role="status">
-          <span class="sr-only">Cargando...</span>
+          <span class="visually-hidden">Cargando...</span>
         </div>
+      </div>
         `
     let query = { producto: productoABuscar.toLowerCase() }
     //console.log(query)
