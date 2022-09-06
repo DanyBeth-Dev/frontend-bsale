@@ -13,7 +13,7 @@ window.addEventListener('load', function (event) {
   const filtrado = async (productoDeseado) => {
     //console.log(productoDeseado)
     const allData = await axios.get(`${urlBase}/data${productoDeseado}`)
-    //console.log(allData.data)
+    console.log(allData.data)
     let allElements = ''
     allData.data.forEach(e => {
       const url = e.url_image ? e.url_image : '#'
@@ -55,7 +55,7 @@ document.addEventListener('submit', async (e) => {
     //console.log(query)
     let api = `${urlBase}/search`
     let res = await axios.get(api, { params: query })
-    //console.log(res)
+    console.log(res)
     let resData = res.data
     //console.log(api, res)
     console.log('resData: ', resData)
