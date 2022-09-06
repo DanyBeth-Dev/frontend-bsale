@@ -2,6 +2,7 @@ let cards = document.getElementById('cards')
 let $template = document.getElementById('card-template').content
 let $fragment = document.createDocumentFragment()
 let formulario = document.getElementById('busqueda')
+let urlBase = 'https://boiling-everglades-34988.herokuapp.com'
 
 /* Renderizado para cada ruta */
 /* Manipulación del DOM directa */
@@ -11,7 +12,7 @@ window.addEventListener('load', function (event) {
 
   const filtrado = async (productoDeseado) => {
     //console.log(productoDeseado)
-    const allData = await axios.get(`/data${productoDeseado}`)
+    const allData = await axios.get(`${urlBase}/data${productoDeseado}`)
     //console.log(allData.data)
     let allElements = ''
     allData.data.forEach(e => {
@@ -52,7 +53,7 @@ document.addEventListener('submit', async (e) => {
         `
     let query = { producto: productoABuscar.toLowerCase() }
     //console.log(query)
-    let api = `/search`
+    let api = `${urlBase}/search`
     let res = await axios.get(api, { params: query })
     //console.log(res)
     let resData = res.data
