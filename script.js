@@ -9,11 +9,12 @@ let urlBase = 'https://evening-taiga-78339.herokuapp.com'
 
 window.addEventListener('load', function (event) {
   const ubicacion = event.target.location.pathname
+  console.log('ubicacion: ', ubicacion)
 
   const filtrado = async (productoDeseado) => {
     //console.log(productoDeseado)
     const allData = await axios.get(`${urlBase}/data${productoDeseado}`)
-    console.log(allData.data)
+    console.log(1, allData.data)
     let allElements = ''
     allData.data.forEach(e => {
       const url = e.url_image ? e.url_image : '#'
@@ -55,7 +56,7 @@ document.addEventListener('submit', async (e) => {
     //console.log(query)
     let api = `${urlBase}/search`
     let res = await axios.get(api, { params: query })
-    console.log(res)
+    console.log(2, res)
     let resData = res.data
     //console.log(api, res)
     console.log('resData: ', resData)
