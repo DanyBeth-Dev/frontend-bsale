@@ -1,0 +1,88 @@
+let cards = document.getElementById('cards')
+let $template = document.getElementById('card-template').content
+let $fragment = document.createDocumentFragment()
+let formulario = document.getElementById('busqueda')
+
+/* Renderizado para cada ruta */
+/* Manipulación del DOM directa */
+
+window.addEventListener('load', function (event) {
+  const ubicacion = event.target.location.pathname
+
+  const filtrado = async (productoDeseado) => {
+    //console.log(productoDeseado)
+    const allData = await axios.get(`/data${productoDeseado}`)
+    //console.log(allData.data)
+    let allElements = ''
+    allData.data.forEach(e => {
+      const url = e.url_image ? e.url_image : '#'
+      let price = new Intl.NumberFormat('es-CL', {
+        style: 'currency',
+        currency: 'CLP'
+      })
+      allElements += `
+        <div class="col">
+          <div class="card m-2" style="width: 18rem;">
+            <img src='${url}' class='img-fluid card-img-top' alt='${e.name}'>
+            <div class="card-body">
+              <h5 class="card-title">${e.name}</h5>
+              <p class="card-text">${price.format(e.price)}</p>
+            </div>
+          </div>
+        </div>
+      `
+    });
+    cards.innerHTML = allElements
+  }
+  filtrado(ubicacion)
+});
+
+/* Búsqueda */
+/* Manipulación del DOM optimizada utilizando templates y fragments */
+
+document.addEventListener('submit', async (e) => {
+  e.preventDefault()
+  let productoABuscar = e.target[0].value
+  //console.log(productoABuscar)
+  try {
+    cards.innerHTML = `
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Cargando...</span>
+        </div>
+        `
+    let query = { producto: productoABuscar.toLowerCase() }
+    //console.log(query)
+    let api = `/search`
+    let res = await axios.get(api, { params: query })
+    //console.log(res)
+    let resData = res.data
+    //console.log(api, res)
+    console.log('resData: ', resData)
+
+    if (resData == 'No results' || resData.length == 0) {
+      cards.innerHTML = `<h2>Sin resultados</h2>`
+    } else {
+      resData.forEach(e => {
+        //console.log(e)
+        const url = e.url_image ? e.url_image : '#'
+        let price = new Intl.NumberFormat('es-CL', {
+          style: 'currency',
+          currency: 'CLP'
+        })
+        $template.querySelector('img').src = url;
+        $template.querySelector('img').alt = e.name;
+        $template.querySelector('h5').textContent = e.name;
+        $template.querySelector('p').textContent = price.format(e.price);
+
+        let $clone = document.importNode($template, true);
+        $fragment.appendChild($clone);
+      });
+
+      cards.innerHTML = '';
+      cards.appendChild($fragment)
+    }
+  } catch (err) {
+    //console.log(err)
+    cards.innerHTML = `<p>Ocurrió un error</p>`
+  }
+})
